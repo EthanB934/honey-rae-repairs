@@ -29,9 +29,9 @@ export const TicketList = () => {
     }, [showEmergencyOnly, allTickets])
   
     useEffect(() => {
-      const searchTickets = allTickets.filter((ticket) => 
-          ticket.description.toLowerCase().includes(searchTerms.toLowerCase()))
-      setFilteredTickets(searchTickets)
+        const searchTickets = allTickets.filter((ticket) => 
+            ticket.description.toLowerCase().includes(searchTerms.toLowerCase()))
+        setFilteredTickets(searchTickets)
     }, [searchTerms, allTickets])
 
     return (
@@ -42,6 +42,12 @@ export const TicketList = () => {
           <Filter setShowEmergencyOnly={setShowEmergencyOnly} setSearchTerms={setSearchTerms}/>
           {filteredTickets.map(ticketObj => {
             return (
+              // In the ticket component function call, there are two attributes, ticket and key. 
+              // Ticket is set equal to the current iterating object being mapped from filteredTickets. It is being passed
+              // as an argument to the Ticket component function. 
+              // Key is not being passed as an argument to the Ticket component function. Instead, it is simply assigning
+              // a unique id to the individual ticket components. It evaluates to the integer assigned to the ticket object
+              // id property. 
               <Ticket ticket={ticketObj} name="Joe" key={ticketObj.id}/>
           )
           })}
