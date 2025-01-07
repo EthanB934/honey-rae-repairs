@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-import { getNonStaffUsers } from "../../services/userServices"
-import { Customer } from "./customer"
+import { getNonStaffUsers } from "../../services/customerServices"
+import { User } from "../../Users/userServices"
 import "./customers.css"
 
 export const CustomerList = () => {
@@ -14,10 +14,10 @@ export const CustomerList = () => {
     }, [])
 
     return <>
-    <section className="customers">
-        <div>
+   <section>
+        <div className="customers">
             {nonStaffUsers.map((nonStaffUser) => {
-                return <Customer customer={nonStaffUser} key={nonStaffUser.id}/>
+                return <User customer={nonStaffUser} key={nonStaffUser.id}/>
             })}
         </div>
     </section>
