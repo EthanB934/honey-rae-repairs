@@ -1,6 +1,21 @@
+/*
+    This module is for receiving similar data between users who are staff and who are not. This module is not receiving
+    unique data to customer objects nor employee objects. Those objects have their own unique data. This module should be 
+    seen as data common to all users. 
+*/
 import "./users.css"
 
-export const User = ( {customer} ) => {
+export const User = ( {user} ) => {
+    return <div className="user">
+        {console.log(user)}
+        <div className="user-info">Name</div>
+            <header>{user.fullName}</header>
+        <div className="user-info">E-mail</div>
+            <footer>{user.email}</footer>
+    </div>
+}
+
+export const Customer = ( {customer} ) => {
     return <div className="user">
         {console.log(customer)}
         <div className="user-info">Name</div>
@@ -10,6 +25,15 @@ export const User = ( {customer} ) => {
     </div>
 }
 
+export const Employee = ( {employee} ) => {
+    return <div className="user">
+        {console.log(employee)}
+        <div className="user-info">Name</div>
+            <header>{employee.fullName}</header>
+        <div className="user-info">E-mail</div>
+            <footer>{employee.email}</footer>
+    </div>
+}
 /*
     This user component is a generic component for both users who are staff and who are not. Do not pass the parameter set
     in the .map as a prop to the function. Instead, pass in the attribute associated with that parameter. In the case of
