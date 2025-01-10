@@ -7,7 +7,7 @@ import "./users.css"
 
 export const User = ( {user} ) => {
     return <div className="user">
-        {console.log(user)}
+        {console.log("User: ", user)}
         <div className="user-info">Name</div>
             <header>{user.fullName}</header>
         <div className="user-info">E-mail</div>
@@ -17,7 +17,7 @@ export const User = ( {user} ) => {
 
 export const Customer = ( {customer} ) => {
     return <div className="user">
-        {console.log(customer)}
+        {console.log("Customer: ", customer)}
         <div className="user-info">Name</div>
             <header>{customer.fullName}</header>
         <div className="user-info">E-mail</div>
@@ -27,7 +27,7 @@ export const Customer = ( {customer} ) => {
 
 export const Employee = ( {employee} ) => {
     return <div className="user">
-        {console.log(employee)}
+        {console.log("Employee: ", employee)}
         <div className="user-info">Name</div>
             <header>{employee.fullName}</header>
         <div className="user-info">E-mail</div>
