@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { getAllEmployees } from "../../services/employeeServices"
+import { assignTicket, updateTicket } from "../../services/ticketServices"
 
 
-export const Ticket = ({ ticket }) => {
+export const Ticket = ({ ticket, currentUser, resetAllTickets }) => {
   const [allEmployees, setAllEmployees] = useState([])
   const [assignedEmployee, setAssignedEmployee] = useState({})
 
@@ -21,6 +22,35 @@ export const Ticket = ({ ticket }) => {
     }
   }, [allEmployees, ticket])
 
+  const handleClaim = () => {
+    debugger
+    const currentEmployee = allEmployees.find((employee) => employee.id === currentUser.id)
+
+    const newEmployeeTicket = {
+      employeeId: currentEmployee.id,
+      serviceTicketId: ticket.id
+    }
+
+    assignTicket(newEmployeeTicket).then(() => {
+      resetAllTickets()
+      console.log("New employee ticket created!")
+    })
+  }
+
+  const handleClose = () => {
+    const closedTicket = {
+      id: ticket.id,
+      userId: ticket.userId,
+      description: ticket.description,
+      emergency: ticket.emergency,
+      dateCompleted: new Date()
+    }
+    debugger  
+    updateTicket(closedTicket).then(() => {
+      resetAllTickets()
+    })
+  }
+
     return (    
       <section className="ticket">
                 <header className="ticket-info">#{ticket.id}</header>
@@ -33,6 +63,22 @@ export const Ticket = ({ ticket }) => {
                   <div>
                     <div className="ticket-info">emergency</div>
                     <div>{ticket.emergency ? "Yes" : "No"}</div>
+                  </div>
+                  <div className="btn-container">
+                    {/* If the logged in user is an employee and there's no employee ticket associated with the service ticket,
+                    then a button to claim the ticket should display */}
+                    {currentUser.isStaff && !assignedEmployee ? 
+                    <button className="btn btn-secondary" onClick={handleClaim}>Claim</button>
+                    : (
+                      ""
+                    )}
+                    {assignedEmployee?.userId === currentUser.id && !ticket.dateCompleted ? 
+                    <button className="btn btn-warning" onClick={handleClose}>Close</button> 
+                    : (
+                      ""
+                    )}
+                    {/* If the logged in user is the assigned employee for the ticket and there is no dateCompleted,
+                    then a button to close the ticket should be displayed*/}
                   </div>
                 </footer>
               </section>

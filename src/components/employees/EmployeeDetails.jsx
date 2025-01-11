@@ -9,7 +9,7 @@ export const EmployeeDetails = () => {
 
     useEffect(() => {
         getEmployeeByUserId(employeeId).then((data) => {
-            const employeeObj = data[0]
+            const employeeObj = data
             debugger
             setEmployee(employeeObj)
         })

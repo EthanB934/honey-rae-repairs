@@ -4,18 +4,21 @@ import "./Ticket.css"
 import { Ticket } from "./Ticket.jsx"
 import { Filter } from "../filter/FilterBar.jsx"
 
-export const TicketList = () => {
+export const TicketList = ({ currentUser }) => {
   const [allTickets, setAllTickets] = useState([])
   const [showEmergencyOnly, setShowEmergencyOnly] = useState(false)
   const [filteredTickets, setFilteredTickets] = useState([])
   const [searchTerms, setSearchTerms] = useState("")
 
   
+  const getAndSetAllTickets = () => {
+    getAllTickets().then(ticketsArray => {
+      setAllTickets(ticketsArray)
+    })
+  }
+
     useEffect(() => {
-      getAllTickets().then(ticketsArray => {
-        setAllTickets(ticketsArray)
-        console.log("tickets set")
-      })
+      getAndSetAllTickets()
     }, [])
   
     useEffect(() => {
@@ -48,7 +51,7 @@ export const TicketList = () => {
               // Key is not being passed as an argument to the Ticket component function. Instead, it is simply assigning
               // a unique id to the individual ticket components. It evaluates to the integer assigned to the ticket object
               // id property. 
-              <Ticket ticket={ticketObj} name="Joe" key={ticketObj.id}/>
+              <Ticket resetAllTickets={getAndSetAllTickets} ticket={ticketObj} currentUser={currentUser} key={ticketObj.id}/>
           )
           })}
         </article>

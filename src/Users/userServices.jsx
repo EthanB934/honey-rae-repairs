@@ -29,9 +29,9 @@ export const Employee = ( {employee} ) => {
     return <div className="user">
         {console.log("Employee: ", employee)}
         <div className="user-info">Name</div>
-            <header>{employee.fullName}</header>
+            <header>{employee.user?.fullName}</header>
         <div className="user-info">E-mail</div>
-            <footer>{employee.email}</footer>
+            <footer>{employee.user?.email}</footer>
     </div>
 }
 /*
