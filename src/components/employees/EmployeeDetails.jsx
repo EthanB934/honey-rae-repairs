@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getEmployeeByUserId } from "../../services/employeeServices"
+import { getEmployeeByEmployeeId } from "../../services/employeeServices"
 import "./employees.css"
 
 export const EmployeeDetails = () => {
@@ -8,7 +8,7 @@ export const EmployeeDetails = () => {
     const [employee, setEmployee] = useState({})
 
     useEffect(() => {
-        getEmployeeByUserId(employeeId).then((data) => {
+        getEmployeeByEmployeeId(employeeId).then((data) => {
             const employeeObj = data
             debugger
             setEmployee(employeeObj)
