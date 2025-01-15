@@ -1,7 +1,48 @@
-export const Filter = ({setShowEmergencyOnly, setSearchTerms}) => {
+import { useNavigate } from "react-router-dom"
+
+export const Filter = ({setShowEmergencyOnly, setSearchTerms, setMyTickets ,currentUser}) => {
+    const navigate = useNavigate()
     return <div className="filter-bar">
-            <button className="filter-btn btn-primary" onClick={() => {setShowEmergencyOnly(true)}}>Emergency!</button>
-            <button className="filter-btn btn-secondary" onClick={() => {setShowEmergencyOnly(false)}}>Show All</button>
+        {currentUser.isStaff 
+        ?  (
+            <>
+                <button 
+                    className="filter-btn btn-primary" 
+                    onClick={() => {setShowEmergencyOnly(true)}}>
+                        Emergency!
+                </button>
+                <button 
+                    className="filter-btn btn-secondary" 
+                    onClick={() => {setShowEmergencyOnly(false)}}>
+                        Show All
+                </button>
+            </>
+      ) : (
+            <>
+                <button
+                    className="filter-btn btn-primary"
+                    onClick={() => {
+                        navigate("/tickets/create")
+                    }}>
+                        Create Ticket
+                </button>
+                <button 
+                    className="filter-btn btn-info"
+                    onClick={() => {
+                        setMyTickets(false)
+                    }}>
+                        Open Tickets
+                </button>
+                <button
+                    className="filter-btn btn-secondary"
+                    onClick={() => {
+                        setMyTickets(true)
+                    }}>
+                        My Tickets
+                </button>
+            </>
+        )
+        }
             <input 
             onChange={(event) => {
                 setSearchTerms(event.target.value)
