@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom"
 
 export const CustomerNavBar = () => {
     const navigate = useNavigate()
-    
+
     return <ul className="navbar">
-        <li className="navbar-item"></li>
+        <li className="navbar-item">
+            <Link className="navbar-link" to="/tickets">Tickets</Link>
+        </li>
         {localStorage.getItem("honey_user") ? (
   <li className="navbar-item navbar-logout">
     <Link
