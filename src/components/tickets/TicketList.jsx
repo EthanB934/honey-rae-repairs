@@ -22,7 +22,7 @@ export const TicketList = ({ currentUser }) => {
     getAllTickets().then(ticketsArray => {
         // Customers' view will always evaluate to false, Employees' view will always evaluate to true
         const customerTickets = ticketsArray
-        const openTickets = customerTickets.filter((ticket) => ticket.dateCompleted === "")
+        const openTickets = customerTickets.filter((ticket) => currentUser.id === ticket.userId && ticket.dateCompleted === "")
         setAllTickets(openTickets)
         // This else statement should be related to the My Tickets button in the Filter component
         if(myTickets) {
@@ -71,7 +71,12 @@ export const TicketList = ({ currentUser }) => {
               // Key is not being passed as an argument to the Ticket component function. Instead, it is simply assigning
               // a unique id to the individual ticket components. It evaluates to the integer assigned to the ticket object
               // id property. 
-              <Ticket resetAllTickets={getAndSetAllEmployeeTickets} ticket={ticketObj} currentUser={currentUser} key={ticketObj.id}/>
+              <Ticket 
+              resetAllEmployeeTickets={getAndSetAllEmployeeTickets} 
+              resetAllCustomerTickets={getAndSetAllCustomerTickets} 
+              ticket={ticketObj} 
+              currentUser={currentUser} 
+              key={ticketObj.id}/>
           )
           })}
         </article>

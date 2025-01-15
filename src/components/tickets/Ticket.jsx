@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { getAllEmployees } from "../../services/employeeServices"
-import { assignTicket, updateTicket } from "../../services/ticketServices"
+import { assignTicket, deleteTicket, updateTicket } from "../../services/ticketServices"
 
 
-export const Ticket = ({ ticket, currentUser, resetAllTickets }) => {
+export const Ticket = ({ ticket, currentUser, resetAllEmployeeTickets, resetAllCustomerTickets }) => {
   const [allEmployees, setAllEmployees] = useState([])
   const [assignedEmployee, setAssignedEmployee] = useState({})
 
@@ -24,7 +24,7 @@ export const Ticket = ({ ticket, currentUser, resetAllTickets }) => {
 
   const handleClaim = () => {
     debugger
-    const currentEmployee = allEmployees.find((employee) => employee.id === currentUser.id)
+    const currentEmployee = allEmployees.find((employee) => employee.userId === currentUser.id)
 
     const newEmployeeTicket = {
       employeeId: currentEmployee.id,
@@ -32,7 +32,7 @@ export const Ticket = ({ ticket, currentUser, resetAllTickets }) => {
     }
 
     assignTicket(newEmployeeTicket).then(() => {
-      resetAllTickets()
+      resetAllEmployeeTickets()
       console.log("New employee ticket created!")
     })
   }
@@ -47,8 +47,15 @@ export const Ticket = ({ ticket, currentUser, resetAllTickets }) => {
     }
     debugger  
     updateTicket(closedTicket).then(() => {
-      resetAllTickets()
+      resetAllEmployeeTickets()
     })
+  }
+
+  const handleDelete = (ticketObj) => {
+    //console.log("Button clicked!")
+    //console.log(ticketObj)
+    deleteTicket(ticketObj).then(resetAllCustomerTickets)
+    console.log("Ticket Deleted!")
   }
 
     return (    
@@ -79,6 +86,14 @@ export const Ticket = ({ ticket, currentUser, resetAllTickets }) => {
                     )}
                     {/* If the logged in user is the assigned employee for the ticket and there is no dateCompleted,
                     then a button to close the ticket should be displayed*/}
+                    {!currentUser.isStaff && (!assignedEmployee || ticket.dateCompleted)
+                      ? <button className="btn btn-warning" onClick={() => {handleDelete(ticket)}}>Delete</button>
+                      : (
+                        ""
+                      )}
+
+                    {/* If the logged in user is a customer, and if a ticket related to current user is not assigned,
+                    to an employee. Display a button to delete the open ticket */}
                   </div>
                 </footer>
               </section>

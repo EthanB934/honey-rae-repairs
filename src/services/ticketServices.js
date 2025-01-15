@@ -21,3 +21,10 @@ export const updateTicket = (updatedTicket) => {
         body: JSON.stringify(updatedTicket)
     })
 }
+
+export const deleteTicket = (ticketToDelete) => {
+    //console.log(ticketToDelete)
+    return fetch(`http://localhost:8088/serviceTickets/${ticketToDelete.id}`, {
+        method: "DELETE"
+    })
+}
